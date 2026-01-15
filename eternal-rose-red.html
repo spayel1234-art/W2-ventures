@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Eternal Rose Candle (Red) | Whispering Wick</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family:-apple-system,BlinkMacSystemFont,sans-serif; background:#f6f6f6; margin:0; }
+    .container { max-width:420px; margin:auto; padding:16px; }
+    .card { background:#fff; border-radius:20px; padding:18px; box-shadow:0 10px 30px rgba(0,0,0,.08); }
+    img { width:100%; border-radius:16px; }
+    h1 { font-size:22px; margin:14px 0 6px; }
+    .price { font-size:18px; font-weight:600; }
+    .badge { background:#eee; padding:6px 10px; border-radius:12px; font-size:13px; display:inline-block; }
+    button { width:100%; padding:14px; border-radius:14px; border:none; font-size:16px; margin-top:12px; }
+    .pay { background:#000; color:#fff; }
+    .confirm { background:#444; color:#fff; }
+    .small { font-size:13px; color:#555; text-align:center; }
+  </style>
+</head>
+<body>
+
+<div class="container"><div class="card">
+
+<img src="images/rose-red.jpg">
+
+<h1>Eternal Rose Candle (Red)</h1>
+<div class="price">₹399</div>
+<div class="badge">Luxury Floral Sculpt</div>
+
+<p>
+A timeless red rose candle symbolising love, passion and elegance.
+Perfect for gifting and romantic décor.
+</p>
+
+<p id="orderInfo" class="badge"></p>
+
+<button class="pay" id="payBtn">Pay via UPI</button>
+<a id="formLink"><button class="confirm">Submit Payment</button></a>
+
+<p class="small">WhatsApp updates enabled • Secure UPI</p>
+
+</div></div>
+
+<script>
+const PRODUCT="Eternal Rose Candle (Red)";
+const BASE_PRICE=399;
+const VPA="spayel1234@okaxis";
+const BRAND="Whispering Wick";
+
+const orderId="WW-"+Math.floor(100000+Math.random()*900000);
+const amount=(BASE_PRICE+(Math.random()*0.9+0.1)).toFixed(2);
+
+document.getElementById("orderInfo").innerText=`Order ID: ${orderId} • ₹${amount}`;
+
+document.getElementById("payBtn").onclick=()=>window.location.href=
+`upi://pay?pa=${VPA}&pn=${encodeURIComponent(BRAND)}&am=${amount}&cu=INR&tn=${encodeURIComponent(orderId+" "+PRODUCT)}`;
+
+document.getElementById("formLink").href=
+"https://docs.google.com/forms/d/e/1FAIpQLSfYYJQpx_sIP0cW_CZmgTBfXQ2Vw4umenKLY6oNrGu0NnX6uA/viewform"
++"?entry.1672364383="+orderId+"&entry.191859951="+encodeURIComponent(PRODUCT)+"&entry.1862910367="+amount;
+</script>
+
+</body>
+</html>

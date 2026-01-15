@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Order Status | Whispering Wick</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family:-apple-system,BlinkMacSystemFont,sans-serif; background:#f6f6f6; margin:0; }
+    .container { max-width:420px; margin:auto; padding:20px; }
+    .card { background:#fff; border-radius:20px; padding:20px;
+            box-shadow:0 10px 30px rgba(0,0,0,.08); }
+    h2 { text-align:center; margin-bottom:12px; }
+    input { width:100%; padding:12px; border-radius:12px; border:1px solid #ccc; }
+    button { width:100%; margin-top:12px; padding:12px;
+             border-radius:14px; border:none; background:#000; color:#fff; font-size:15px; }
+    .status { margin-top:16px; text-align:center; font-size:15px; }
+    .small { text-align:center; font-size:13px; color:#666; margin-top:10px; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+<div class="card">
+
+<h2>Check Your Order Status</h2>
+
+<input id="orderId" placeholder="Enter Order ID (e.g. WW-123456)">
+<button onclick="checkStatus()">Check Status</button>
+
+<div id="result" class="status"></div>
+
+<p class="small">
+Need help? <a href="https://wa.me/918910479282">WhatsApp Support</a>
+</p>
+
+</div>
+</div>
+
+<script>
+const SHEET_ID = "10UQExVuGGaGS1_zZS7j9d5rVPCOiPf-TjHbprn-hIiM";
+const SHEET_NAME = "Form Responses 1";
+
+async function checkStatus() {
+  const oid = document.getElementById("orderId").value.trim();
+  const result = document.getElementById("result");
+
+  if (!oid) {
+    result.innerText = "Please enter your Order ID.";
+    return;
+  }
+
+  const url = `https://opensheet.elk.sh/${SHEET_ID}/${encodeURIComponent(SHEET_NAME)}`;
+  const res = await fetch(url);
+  const data = await res.json();
+
+  const order = data.find(row => row["Order ID"] === oid);
+
+  if (!order) {
+    result.innerHTML = "❌ <strong>Order not found</strong>";
+    return;
+  }
+
+  result.innerHTML = `
+    <strong>Status:</strong> ${order.Status || "Pending"}<br>
+    <strong>Product:</strong> ${order.Product}<br>
+    <strong>Amount:</strong> ₹${order.Amount}
+  `;
+}
+</script>
+
+</body>
+</html>

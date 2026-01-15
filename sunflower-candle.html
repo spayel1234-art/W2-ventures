@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Sunflower Candle | Whispering Wick</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background:#f6f6f6; margin:0; }
+    .container { max-width:420px; margin:auto; padding:16px; }
+    .card { background:#fff; border-radius:20px; padding:18px; box-shadow:0 10px 30px rgba(0,0,0,.08); }
+    img { width:100%; border-radius:16px; }
+    h1 { margin:14px 0 6px; font-size:22px; }
+    .price { font-size:18px; font-weight:600; }
+    .badge { display:inline-block; background:#eee; padding:6px 10px; border-radius:12px; font-size:13px; margin:6px 0; }
+    button { width:100%; padding:14px; border-radius:14px; border:none; font-size:16px; margin-top:12px; }
+    .pay { background:#000; color:#fff; }
+    .confirm { background:#444; color:#fff; }
+    .small { font-size:13px; color:#555; text-align:center; margin-top:10px; }
+    a { text-decoration:none; }
+    .back { font-size:14px; color:#555; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+<div class="card">
+
+<a class="back" href="index.html">← Back to Store</a>
+
+<img src="images/sunflower.jpg" alt="Sunflower Candle">
+
+<h1>Sunflower Candle</h1>
+<div class="price">₹199</div>
+<div class="badge">Handcrafted • Bestseller</div>
+
+<p>
+A joyful sculpted sunflower candle designed to brighten interiors and make
+a thoughtful, aesthetic gift.
+</p>
+
+<p id="orderInfo" class="badge"></p>
+
+<button class="pay" id="payBtn">Pay via UPI</button>
+
+<a id="formLink">
+  <button class="confirm">Submit Payment</button>
+</a>
+
+<p class="small">
+After payment, submit UTR to confirm your order.<br>
+📦 Shipping updates via WhatsApp.
+</p>
+
+<p class="small">
+<a href="https://wa.me/918910479282">Need help? WhatsApp us</a>
+</p>
+
+</div>
+</div>
+
+<script>
+const PRODUCT = "Sunflower Candle";
+const BASE_PRICE = 199;
+const VPA = "spayel1234@okaxis";
+const BRAND = "Whispering Wick";
+
+const orderId = "WW-" + Math.floor(100000 + Math.random()*900000);
+const unique = (Math.random()*0.9 + 0.1).toFixed(2);
+const amount = (BASE_PRICE + parseFloat(unique)).toFixed(2);
+
+document.getElementById("orderInfo").innerText =
+  `Order ID: ${orderId} • Pay ₹${amount}`;
+
+document.getElementById("payBtn").onclick = () => {
+  window.location.href =
+  `upi://pay?pa=${VPA}&pn=${encodeURIComponent(BRAND)}&am=${amount}&cu=INR&tn=${encodeURIComponent(orderId+" "+PRODUCT)}`;
+};
+
+document.getElementById("formLink").href =
+  "https://docs.google.com/forms/d/e/1FAIpQLSfYYJQpx_sIP0cW_CZmgTBfXQ2Vw4umenKLY6oNrGu0NnX6uA/viewform"
+  + "?entry.1672364383=" + encodeURIComponent(orderId)
+  + "&entry.191859951=" + encodeURIComponent(PRODUCT)
+  + "&entry.1862910367=" + encodeURIComponent(amount);
+</script>
+
+</body>
+</html>

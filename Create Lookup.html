@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Order Lookup | Whispering Wick</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<div class="container">
+<div class="card">
+
+<h2>Track Your Order</h2>
+
+<input id="orderId" placeholder="Enter Order ID"
+style="width:100%;padding:12px;margin-bottom:10px">
+
+<button onclick="lookup()">Check Status</button>
+
+<div id="result" class="section"></div>
+
+<a class="back" href="index.html">← Back to Store</a>
+
+</div>
+</div>
+
+<script>
+const SHEET_ID = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRSsxhqBvZlpJPkw4yGFABl6SXC2S9FDHE4kVL8mJT5t66o0a3BdHHSZMnqULnvc-gaIcaB0PBVAJEj/pubhtml";
+const SHEET_NAME = "Main";
+
+function lookup() {
+  const oid = document.getElementById("orderId").value.trim();
+  const url =
+    `https://opensheet.elk.sh/${SHEET_ID}/${SHEET_NAME}`;
+
+  fetch(url)
+    .then(res => res.json())
+    .then(data => {
+      const order = data.find(r => r["Order ID"] === oid);
+      if (!order) {
+        document.getElementById("result").innerHTML =
+          "<p class='small'>Order not found.</p>";
+        return;
+      }
+
+      document.getElementById("result").innerHTML = `
+        <p class="badge">${order.Status}</p>
+        <p class="small"><b>Product:</b> ${order.Product}</p>
+        <p class="small"><b>Amount:</b> ₹${order.Amount}</p>
+        <p class="small"><b>Shipping:</b> ${order["Shipping Status"]}</p>
+        ${order["Tracking Link"] ?
+          `<a href="${order["Tracking Link"]}">Track Shipment</a>` : ""}
+      `;
+    });
+}
+</script>
+</body>
+</html>
